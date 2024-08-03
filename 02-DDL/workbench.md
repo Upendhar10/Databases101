@@ -34,11 +34,16 @@ PRIMARY KEY(EID)
 -- # Describe the table schema
 DESC employee;
 
--- Rename table name "employee" to "staff"
+-- # Alter table
+ALTER TABLE employee ADD COLUMN JobRole varchar(50);
+ALTER TABLE employee MODIFY COLUMN  LastName varchar(40);
+ALTER TABLE employee DROP COLUMN JobRole;
+
+-- # Rename table name "employee" to "staff"
 ALTER TABLE employees
 RENAME TO staff;
 
--- Drop the table
+-- # Drop the table
 DROP TABLE staff;
 
 -- # creata a new table "courses" in the database "techforallwithpriya"
