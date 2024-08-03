@@ -1,135 +1,56 @@
-# Data Definition Language
+# Mastering Data Retrieval with SELECT Statements
 
-- Data Definition Language (DDL) is used to define and manage the structure of database objects such as tables, indexes, and schemas.
-- DDL commands are concerned with the structure of the database itself.
-- They are used to create, modify, and delete these database objects
+## Datatypes
 
-### 1. CREATE Command
+1. TIMESTAMP : represents a Date along with Time => YY-MM-DD HH:MM:SS
 
-- The CREATE command is used to create new database objects such as tables, indexes, views, schemas, etc.
+## Constraints
 
-  ```sql
-  CREATE TABLE employees (
-      employee_id INT PRIMARY KEY,
-      first_name VARCHAR(50),
-      last_name VARCHAR(50),
-      hire_date DATE,
-      salary DECIMAL(10, 2)
-  );
-  ```
+1. Primary Key : Unique and Not Null
+2. Unique Key : Unique but Not Null
 
-### 2. ALTER Command
+## Clauses
 
-- The ALTER command is used to modify the structure of an existing database object.
-- This can include adding, deleting, or modifying columns in a table, or adding and removing constraints.
+1. WHERE : Used to perform filtering
+2. ORDER BY : By default, Sorts the data in Ascending order
+3. ORDER BY DESC : Sorts the data in Descending order
+4. LIMIT : Limit the number of records to be displayed
 
-  **1. Adding a new column**
+## Flow of Execution
 
-  ```sql
-  ALTER TABLE employees
-  ADD email VARCHAR(100);
-  ```
+1. Statement containing SELECT, FROM, ORDER BY, WHERE and LIMIT
 
-  **2. Modifying a Column:**
+   > SELECT \* FROM employee ORDER BY employee Salary LIMIT 2;
 
-  ```sql
-  ALTER TABLE employees
-  MODIFY salary DECIMAL(12, 2);
-  ```
+   - FROM => SELECT => ORDER BY => LIMIT
 
-  **3. Dropping a Column:**
+2. Statement containing SELECT, AGGREGATE and FROM
 
-  ```sql
-  ALTER TABLE employees
-  DROP COLUMN email;
-  ```
+   > SELECT COUNT(\*) AS totalEntrollments FROM learners;
 
-  **4. Adding a Constraint:**
+   - FROM => SELECT => AGGREGATE
 
-  ```sql
-  ALTER TABLE employees
-  ADD CONSTRAINT chk_salary CHECK (salary > 0);
-  ```
+# Data Analysis
 
-### 3. DROP Command
+-- sorting the records - ORDERBY
+SELECT _ FROM employee ORDER BY Salary ;
+SELECT _ FROM employee ORDER BY Salary DESC LIMIT 3;
 
-- The DROP command is used to delete database objects such as tables, indexes, views, etc.
-- This action is irreversible.
+-- record getting highest salary and age is greater than 25 | From - where - select - order by - limit
+SELECT \* FROM employee WHERE age > 30 ORDER BY Salary DESC LIMIT 1;
 
-  ```sql
-  DROP TABLE employees;
-  ```
+-- display the number of enrollments in the website of techforallwithpriya
+SELECT COUNT(\*) AS numberOfEnrollments FROM learners;
 
-### 4. TRUNCATE Command
+-- display the number of enrollments in the courseId = 3
+SELECT COUNT(\*) AS EnrollmentsInSQlCourse FROM learners WHERE EnrolledCourses = 1;
 
-- The TRUNCATE command is used to delete all rows from a table without removing the table structure.
-- This operation is fast and cannot be rolled back in some databases because it doesn't log individual row deletions.
+-- Count the no.of enrollments in the month of jan
+SELECT COUNT(\*) AS enrollmentsInJan FROM learners WHERE learnerEnrollmentDate LIKE '%-01-21';
 
-  ```sql
-  TRUNCATE TABLE employees;
-  ```
+-- Update the Jeeven record with yearsOfExperience = 1 and learnerCompany = AMAZON
+UPDATE learners SET YearsOfExperience = 1, learnerCompany = "Infosys" WHERE learnerId = 4;
 
-### 5. RENAME Command
-
-- The RENAME command is used to change the name of a database object.
-
-  ```sql
-  ALTER TABLE employees
-  RENAME TO staff;
-  ```
-
-## Data Types :
-
-- Data types in SQL define the type of data that can be stored in a column.
-
-  **1. Numeric Data Types:**
-
-  - INT: Integer values.
-  - FLOAT: Floating-point numbers.
-  - DECIMAL: Fixed-point numbers, useful for precise calculations, typically in financial applications.
-    > DECIMAL(p, s), NUMERIC(p, s) where, p = precision and s = scale
-
-  **2. Character Data Types:**
-
-  - CHAR: Fixed-length character strings.
-  - VARCHAR: Variable-length character strings.
-
-## Constraints :
-
-- Constraints in SQL are used to specify rules for data in a table.
-- These rules ensure the integrity and accuracy of the data.
-
-  **1. PRIMARY KEY:**
-
-  - Ensures that each value in a column or set of columns is unique and not null.
-  - This uniquely identifies each row in a table.
-
-    ```sql
-    CREATE TABLE employees (
-        id INT PRIMARY KEY,
-        name VARCHAR(100)
-    );
-    ```
-
-  **2. FOREIGN KEY:**
-
-  - Ensures that the value in a column (or a set of columns) matches values in another table, establishing a relationship between tables.
-
-    ```sql
-    CREATE TABLE orders (
-        order_id INT PRIMARY KEY,
-        customer_id INT,
-        FOREIGN KEY (customer_id) REFERENCES customers(id)
-    );
-    ```
-
-  **3. NOT NULL :**
-
-  - Ensures that a column cannot have a NULL value.
-
-    ```sql
-    CREATE TABLE products (
-        product_id INT PRIMARY KEY,
-        product_name VARCHAR(100) NOT NULL
-    );
-    ```
+-- count the no.of comapnies learners belong to
+-- COUNT -> counts all not null entries
+SELECT COUNT(DISTINCT learnerCompany) FROM learners;
